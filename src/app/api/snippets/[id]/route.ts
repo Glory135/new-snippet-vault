@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 
 
 // PATCH /api/snippets/[id] - Update snippet
-export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
   const session = await auth.api.getSession({
     headers: await headers() // you need to pass the headers object.
   })
@@ -13,7 +13,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const body = await req.json();
-  const { id } = await params;
+  const { id } = await context.params;
 
   // Verify ownership
   const existing = await prisma.snippet.findFirst({
@@ -38,14 +38,14 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 }
 
 // DELETE /api/snippets/[id]
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
   const session = await auth.api.getSession({
     headers: await headers() // you need to pass the headers object.
   })
 
   if (!session?.user?.email) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { id } = await params;
+  const { id } = await context.params;
 
   const count = await prisma.snippet.deleteMany({
     where: { id, user: { email: session.user.email } }
