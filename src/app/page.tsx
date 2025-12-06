@@ -510,6 +510,9 @@ function PushNotificationManager() {
 
 	return (
 		<div>
+			<div className='standalone:hidden'>
+				This content will be hidden in standalone mode.
+			</div>
 			<h3>Push Notifications</h3>
 			{subscription ? (
 				<>
