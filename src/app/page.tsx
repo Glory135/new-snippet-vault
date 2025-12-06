@@ -557,7 +557,7 @@ function InstallPrompt() {
 
 	return (
 		<div>
-			<h3>Install App</h3>
+			<h3>Install new new App</h3>
 			<button>Add to Home Screen</button>
 			{isIOS && (
 				<p>

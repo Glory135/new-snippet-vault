@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import Script from 'next/script';
+import UpdatePopup from '@/components/UpdatePopup';
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -200,6 +202,8 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				{children}
+				<UpdatePopup />
+				<Script src='/sw-update.js' strategy='afterInteractive' />
 			</body>
 		</html>
 	);
